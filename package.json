@@ -7,11 +7,12 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "push": "drizzle-kit push:pg",
-    "generate": "drizzle-kit generate:pg"
+    "push": "prisma db push",
+    "generate": "prisma db generate"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.3.0",
+    "@prisma/client": "^5.2.0",
     "@radix-ui/react-accordion": "^1.1.2",
     "@radix-ui/react-aspect-ratio": "^1.0.3",
     "@radix-ui/react-avatar": "^1.0.3",
@@ -44,21 +45,20 @@
     "clsx": "^2.0.0",
     "cmdk": "^0.2.0",
     "date-fns": "^2.30.0",
-    "drizzle-orm": "^0.28.3",
     "eslint": "8.47.0",
     "eslint-config-next": "13.4.19",
     "lucide-react": "^0.268.0",
     "next": "13.4.19",
     "next-themes": "^0.2.1",
     "nextjs-toploader": "^1.4.2",
-    "pg": "^8.11.3",
     "postcss": "8.4.28",
-    "postgres": "^3.3.5",
     "react": "18.2.0",
     "react-day-picker": "^8.8.1",
     "react-dom": "18.2.0",
     "react-hook-form": "^7.45.4",
+    "styled-components": "^6.0.7",
     "tailwind-merge": "^1.14.0",
+    "tailwind-styled-components": "^2.2.0",
     "tailwindcss": "3.3.3",
     "tailwindcss-animate": "^1.0.6",
     "typescript": "5.1.6",
@@ -66,12 +66,11 @@
   },
   "devDependencies": {
     "@ianvs/prettier-plugin-sort-imports": "^4.1.0",
-    "@types/pg": "^8.10.2",
     "@typescript-eslint/parser": "^6.4.1",
-    "drizzle-kit": "^0.19.13",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-react": "^7.33.2",
     "eslint-plugin-tailwindcss": "^3.13.0",
-    "postcss-nesting": "^12.0.1"
+    "postcss-nesting": "^12.0.1",
+    "prisma": "^5.2.0"
   }
 }

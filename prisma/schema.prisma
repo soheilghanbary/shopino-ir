@@ -1,0 +1,43 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["fullTextSearch", "fullTextIndex"]
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id      String  @id
+  name    String
+  email   String
+  avatar  String
+  website String? @default("")
+  bio     String? @default("")
+  stores  Store[]
+}
+
+model Store {
+  id          String    @id @default(cuid())
+  name        String
+  description String
+  userId      String
+  user        User      @relation(fields: [userId], references: [id])
+  products    Product[]
+  createdAt   DateTime  @default(now())
+}
+
+model Product {
+  id          String   @id @default(cuid())
+  title       String?  @default("Untitled Product")
+  description String?  @default("")
+  images      Json     @default("[]")
+  category    String?  @default("")
+  price       Float    @default(0.00)
+  storeId     String
+  store       Store    @relation(fields: [storeId], references: [id])
+  createdAt   DateTime @default(now())
+
+  @@fulltext([title])
+}

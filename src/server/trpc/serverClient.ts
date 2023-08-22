@@ -1,6 +1,5 @@
+import { appRouter } from "@/server/routes"
 import { httpBatchLink } from "@trpc/client"
-
-import { appRouter } from "./root"
 
 // api caller for RSC & SA
 export const serverClient = appRouter.createCaller({

@@ -7,6 +7,7 @@ import {
   ChevronRight,
   Clock,
   CreditCard,
+  DollarSign,
   Home,
   Image,
   LayoutPanelLeft,
@@ -31,6 +32,7 @@ import {
 } from "lucide-react"
 
 export const Icons = {
+  dollar: DollarSign,
   right: ChevronRight,
   search: Search,
   left: ChevronLeft,

@@ -8,6 +8,8 @@ import { siteConfig } from "@/config/site"
 import { StyledComponentsRegistry } from "@/components/providers/styled-provider"
 import { ThemeProvider } from "@/components/providers/theme-provider"
 import TRPCProvider from "@/components/providers/trpc-provider"
+import SiteFooter from "@/components/site/site-footer"
+import { SiteHeader } from "@/components/site/site-header"
 
 export const metadata: Metadata = {
   title: {
@@ -58,7 +60,9 @@ export default function RootLayout({
               enableColorScheme
               disableTransitionOnChange
             >
+              <SiteHeader />
               <main className="container mx-auto">{children}</main>
+              <SiteFooter />
             </ThemeProvider>
           </StyledComponentsRegistry>
         </TRPCProvider>

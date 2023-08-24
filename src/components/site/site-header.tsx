@@ -1,4 +1,6 @@
 import Link from "next/link"
+import { api } from "@/server/trpc/api"
+import { serverClient } from "@/server/trpc/serverClient"
 import { LoginLink } from "@kinde-oss/kinde-auth-nextjs/server"
 
 import { db } from "@/lib/db"
@@ -40,9 +42,7 @@ export async function SiteHeader() {
 }
 
 const RightSide = async () => {
-  const id = await getId()
-  const user = await db.user.findFirst({ where: { id } })
-
+  const user = await serverClient.users.getUser()
   const Render = () => (user ? <SiteProfile {...user} /> : <SignInButton />)
 
   return (

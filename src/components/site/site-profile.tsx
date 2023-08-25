@@ -1,8 +1,8 @@
 "use client"
 
+import { useState } from "react"
 import Link from "next/link"
 import { api } from "@/server/trpc/api"
-import { LogoutLink } from "@kinde-oss/kinde-auth-nextjs/server"
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import {
@@ -17,6 +17,7 @@ import {
 import { Icons } from "../icons"
 
 export function SiteProfile(initialData: any) {
+  const [open, setOpen] = useState(false)
   const getUsers = api.users.getUser.useQuery(undefined, {
     initialData,
     refetchOnMount: false,
@@ -24,7 +25,7 @@ export function SiteProfile(initialData: any) {
     refetchOnWindowFocus: false,
   })
   return (
-    <DropdownMenu>
+    <DropdownMenu open={open} onOpenChange={setOpen}>
       <DropdownMenuTrigger>
         <Avatar>
           <AvatarImage src={getUsers.data?.avatar} />
@@ -35,13 +36,18 @@ export function SiteProfile(initialData: any) {
         <DropdownMenuLabel>{getUsers.data?.name}</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuItem>
-          <Link className="flex h-full w-full items-center" href={"/dashboard"}>
+          <Link
+            onClick={() => setOpen(false)}
+            className="flex h-full w-full items-center"
+            href={"/dashboard"}
+          >
             <Icons.dashboard className="mr-2 h-4 w-4" />
             Dashboard
           </Link>
         </DropdownMenuItem>
         <DropdownMenuItem>
           <Link
+            onClick={() => setOpen(false)}
             className="flex h-full w-full items-center"
             href={"/dashboard/products"}
           >
@@ -49,8 +55,9 @@ export function SiteProfile(initialData: any) {
             Products
           </Link>
         </DropdownMenuItem>
-        <DropdownMenuItem className="flex items-center">
+        <DropdownMenuItem>
           <Link
+            onClick={() => setOpen(false)}
             className="flex h-full w-full items-center"
             href={"/dashboard/settings"}
           >
@@ -59,8 +66,9 @@ export function SiteProfile(initialData: any) {
           </Link>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
-        <DropdownMenuItem className="flex items-center">
+        <DropdownMenuItem>
           <Link
+            onClick={() => setOpen(false)}
             className="flex h-full w-full items-center text-pink-500"
             href={"/logout"}
           >

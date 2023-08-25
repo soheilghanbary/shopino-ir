@@ -32,10 +32,6 @@ export default function DashboardLayout({ children }: PropsWithChildren) {
             <Icons.settings className="mr-3 h-5 w-5" />
             Settings
           </SidebarItem>
-          <SidebarItem href={"/dashboard/account"}>
-            <Icons.user className="mr-3 h-5 w-5" />
-            Account
-          </SidebarItem>
         </Sidebar>
       </SidebarContainer>
       <main className="flex-1 py-4">{children}</main>

@@ -3,16 +3,14 @@ import { initTRPC } from "@trpc/server"
 import { getUserSession } from "@/lib/session"
 
 const t = initTRPC.create()
-
-type TUser = {
-  id: string
-}
-
 // user logged middleware for prodcted routes
 const isAuthed = t.middleware(async ({ next }) => {
   const user = await getUserSession()
+  const id = user ? user.id : ""
   return next({
-    ctx: user as TUser,
+    ctx: {
+      id: id as string,
+    },
   })
 })
 

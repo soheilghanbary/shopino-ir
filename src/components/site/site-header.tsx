@@ -1,10 +1,7 @@
 import Link from "next/link"
-import { api } from "@/server/trpc/api"
 import { serverClient } from "@/server/trpc/serverClient"
 import { LoginLink } from "@kinde-oss/kinde-auth-nextjs/server"
 
-import { db } from "@/lib/db"
-import { getId } from "@/lib/session"
 import { tw } from "@/lib/tailwind-styled"
 import { Button } from "@/components/ui/button"
 import { Icons } from "@/components/icons"

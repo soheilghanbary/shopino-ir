@@ -2,9 +2,21 @@
 
 import { useState } from "react"
 import Image from "next/image"
+import Link from "next/link"
 import { api } from "@/server/trpc/api"
 
-import { cn } from "@/lib/utils"
+import { tw } from "@/lib/tailwind-styled"
+
+const ProductListStyled = tw.div`mt-4 grid grid-cols-2 gap-4 md:grid-cols-2 lg:grid-cols-4`
+const ProductCardStyled = tw(
+  Link
+)`rounded-lg border shadow-sm hover:ring-2 ring-primary duration-100 cursor-pointer active:scale-90`
+const Body = tw.div`px-4 py-3 border-t`
+const Title = tw.h2`font-semibold text-base line-clamp-1`
+const ProductImageStyled = tw.div`
+  relative aspect-[4/4] rounded-md
+  [&>img]:h-full [&>img]:w-full [&>img]:rounded-[inherit] [&>img]:object-cover [&>img]:duration-700
+`
 
 export function ProductList({ initialData }: { initialData: any[] }) {
   const getProducts = api.products.getProducts.useQuery(undefined, {
@@ -14,35 +26,36 @@ export function ProductList({ initialData }: { initialData: any[] }) {
     refetchOnWindowFocus: false,
   })
   return (
-    <div className="mt-4 grid grid-cols-2 gap-4 md:grid-cols-2 lg:grid-cols-4">
+    <ProductListStyled>
       {getProducts.data?.map((product) => <ProductCard {...product} />)}
-    </div>
+    </ProductListStyled>
   )
 }
 
 const ProductCard = ({ id, title, price }: TProduct) => (
-  <div key={id} className="space-y-1 rounded-xl border p-4 shadow-sm">
+  <ProductCardStyled href={`/dashboard/products/${id}`} key={id}>
     <ProductImage />
-    <h2 className="text-lg font-bold">{title}</h2>
-    <p className="text-sm text-muted-foreground">${price}</p>
-  </div>
+    <Body>
+      <Title>{title}</Title>
+      <p className="text-sm text-muted-foreground">${price}</p>
+    </Body>
+  </ProductCardStyled>
 )
 
 const ProductImage = () => {
   const [loaded, setLoaded] = useState(false)
   const isLoaded = loaded ? "blur-none" : "blur-sm"
   return (
-    <div className="relative mb-4 aspect-[4/4] rounded-lg">
-      <Image
-        fill
-        alt="hello world"
-        src={"/images/t-shirt.webp"}
-        className={cn(
-          `h-full w-full rounded-[inherit] object-cover duration-700`,
-          isLoaded
-        )}
-        onLoadingComplete={() => setLoaded(true)}
-      />
+    <div className="p-2">
+      <ProductImageStyled>
+        <Image
+          fill
+          alt="hello world"
+          src={"/images/t-shirt.webp"}
+          className={isLoaded}
+          onLoadingComplete={() => setLoaded(true)}
+        />
+      </ProductImageStyled>
     </div>
   )
 }

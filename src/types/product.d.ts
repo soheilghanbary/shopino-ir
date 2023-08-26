@@ -3,6 +3,7 @@ type TProduct = {
   title: string
   price: number
   category: string
+  inventory: number
   description: string
   images: []
   createdAt: Date | string

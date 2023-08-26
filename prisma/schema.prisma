@@ -37,6 +37,7 @@ model Product {
   price       Float    @default(0.00)
   // storeId     String
   // store       Store    @relation(fields: [storeId], references: [id])
+  inventory   Float    @default(0.00)
   createdAt   DateTime @default(now())
   userId      String
   user        User     @relation(fields: [userId], references: [id])

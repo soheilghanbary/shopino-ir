@@ -1,3 +1,4 @@
+import { detailsSchema } from "@/schemas/product"
 import { protectedProcedure, publicProcedure, router } from "@/server/trpc/trpc"
 import { z } from "zod"
 
@@ -16,19 +17,15 @@ export const productsRouter = router({
       return await db.product.create({ data: { title, userId: ctx.id } })
     }),
   updateProduct: protectedProcedure
-    .input(
-      z.object({
-        id: z.string(),
-        title: z.string().trim(),
-        price: z.string().trim(),
-        category: z.string().trim(),
-        description: z.string().trim(),
-      })
-    )
+    .input(detailsSchema)
     .mutation(async ({ input }) => {
       return await db.product.update({
         where: { id: input.id },
-        data: { ...input, price: parseFloat(input.price) },
+        data: {
+          ...input,
+          price: parseFloat(input.price.toString()),
+          inventory: parseFloat(input.inventory.toString()),
+        },
       })
     }),
 })

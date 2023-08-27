@@ -5,7 +5,7 @@ type TProduct = {
   category: string
   inventory: number
   description: string
-  images: []
+  images: [{ url: string; key: string }]
   createdAt: Date | string
   userId: string
 }

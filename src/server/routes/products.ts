@@ -28,4 +28,24 @@ export const productsRouter = router({
         },
       })
     }),
+  updateImageProducts: protectedProcedure
+    .input(
+      z.object({
+        id: z.string(),
+        images: z.array(
+          z.object({
+            key: z.string(),
+            url: z.string(),
+          })
+        ),
+      })
+    )
+    .mutation(async ({ input }) => {
+      return await db.product.update({ where: { id: input.id }, data: input })
+    }),
+  deleteProduct: protectedProcedure
+    .input(z.string())
+    .mutation(async ({ input }) => {
+      return await db.product.delete({ where: { id: input } })
+    }),
 })

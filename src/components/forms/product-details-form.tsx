@@ -20,14 +20,20 @@ import { Input } from "@/components/ui/input"
 
 import { Icons } from "../icons"
 
-export function ProductDetailsForm(initial: any) {
+export function ProductDetailsForm(initialData: any) {
+  const getProduct = api.products.getProduct.useQuery(initialData.id, {
+    initialData,
+    refetchOnMount: false,
+    refetchOnReconnect: false,
+    refetchOnWindowFocus: false,
+  })
   return (
     <Card className="max-w-md ">
       <CardHeader>
         <CardTitle>Product Details</CardTitle>
       </CardHeader>
       <CardContent>
-        <DetailsForm {...initial} />
+        <DetailsForm {...getProduct.data} />
       </CardContent>
     </Card>
   )
@@ -38,10 +44,12 @@ const DetailsForm = (initial: any) => {
     defaultValues: initial,
     resolver: zodResolver(detailsSchema),
   })
+  const apiContext = api.useContext()
   const updateProduct = api.products.updateProduct.useMutation()
   const onSubmit = async (values: TDetailsSchema) => {
     await updateProduct.mutateAsync(values)
     toast.success("Product Updated!")
+    apiContext.products.getProduct.invalidate()
   }
   return (
     <Form {...form}>
